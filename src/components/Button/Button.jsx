@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyledButton } from './StyledButton.styled';
 
 
-export default class Button extends Component {
-  render() {
+const  Button = ({loadMoreHandler}) => {
+  
     return (
        <StyledButton> 
-            <button type="submit" className="Button" onClick={this.props.loadMoreHandler}>Load More</button>
+            <button type="submit" className="Button" onClick={loadMoreHandler}>Load More</button>
         </StyledButton>
     );
-  }
+  
 }
+export default Button;

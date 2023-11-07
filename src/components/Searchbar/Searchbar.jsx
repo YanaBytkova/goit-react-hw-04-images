@@ -1,31 +1,26 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { StyledSearchbar } from './StyledSearchbar.styled';
 
+export const Searchbar = ({onSubmit}) => {
 
-
-export class Searchbar extends Component {
-    state = {
-        word: '',
-    };
-    handleSubmit = event => {
+    const [word, setWord] = useState('');
+    const handleSubmit = event => {
         event.preventDefault();
         const form = event.currentTarget;
-        const word = this.state.word;
-        this.props.onSubmit(word);
+        onSubmit(word);
         form.reset();
       };
-      handleInputChange = event => {
+    const handleInputChange = event => {
+      
         const value = event.target.value;
-        this.setState({
-          word: value,
-        });
+        setWord(value);
        
       };
-  render() {
+  
     return (
       <StyledSearchbar>
          <header className="searchbar">
-      <form className="SearchForm" onSubmit={this.handleSubmit}>
+      <form className="SearchForm" onSubmit={handleSubmit}>
         <button type="submit" className="SearchForm-button">
           <span className="SearchForm-button-label"></span>&#128270;
         </button>
@@ -36,11 +31,11 @@ export class Searchbar extends Component {
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
-          onChange={this.handleInputChange}
+          onChange={handleInputChange}
         />
       </form>
     </header>
- </StyledSearchbar>
-    );
-  }
+    </StyledSearchbar>
+  );
 }
+// export default Searchbar;
