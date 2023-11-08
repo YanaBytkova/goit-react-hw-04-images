@@ -69,7 +69,7 @@ export const App = () => {
               if (page > 1) {
                 const addImages = 
                   data.hits;
-                  setImages([...images, ...addImages]);
+                  setImages(prev => [...prev, ...addImages]);
                   setTotalHits(data.totalHits);
                   
               }
