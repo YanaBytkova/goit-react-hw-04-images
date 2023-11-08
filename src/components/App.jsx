@@ -14,7 +14,7 @@ export const App = () => {
   const [totalHits, setTotalHits] = useState(null);
   const [word, setWord] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setError] = useState(null);
+  // const [errorMsg, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [modalData, setModalData] = useState(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -46,43 +46,46 @@ export const App = () => {
   //               setTotalHits(data.totalHits);
   //           }
   //   } catch (error) {
-  //     setError(error.message);
-  //     console.log(errorMsg);
+  //     // setError(error.message);
+  //     console.log(error.message);
   //   } finally {
   //       setIsLoading(false)};
   // }
 
 
-  useEffect((prevState) => {
+  useEffect((prevState, totalHits) => {
+    
     const fetchImages = async () => {
       try {
         setIsLoading(true);
+        setImages(images);
         const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
         if (images == null) {
+          // console.log("No images");
             setImages(data.hits);
             setTotalHits(data.totalHits);
-        }
-        if (page === Math.floor(totalHits / 12)) {
-                alert(`...You viewed all images with ${word}! Please, enter new word!`);
-              }
-              
-              if (images !== null) {
+        } 
+              if (images !== null && page > 1) {
                 const addImages = 
                   data.hits;
-                  setImages(images.concat(addImages));
+                  setImages([...images, ...addImages]);
                   setTotalHits(data.totalHits);
+                  
+              }
+              if (page === Math.floor(totalHits / 12)) {
+                alert(`...You viewed all images with ${word}! Please, enter new word!`);
               }
       } catch (error) {
-        setError(error.message);
-        console.log(errorMsg);
+        // setError(error.message);
+        console.log(error.message);
       } finally {
           setIsLoading(false)};
     }
-    if (prevState !== word ) {
+    if (word && page === 1) {
         setImages(null);
       fetchImages();
     }
-    if (page !== prevState) {
+    if ( page > 1) {
       fetchImages();
     }
     
