@@ -27,34 +27,57 @@ export const App = () => {
     setPage(1);
   }
 
-  const fetchImages = async () => {
-    try {
-      setIsLoading(true);
-      const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
-      if (images == null) {
-          setImages(data.hits);
-          setTotalHits(data.totalHits);
-      }
-      if (page === Math.floor(totalHits / 12)) {
-              alert(`...You viewed all images with ${word}! Please, enter new word!`);
-            }
+  // const fetchImages = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
+  //     if (images == null) {
+  //         setImages(data.hits);
+  //         setTotalHits(data.totalHits);
+  //     }
+  //     if (page === Math.floor(totalHits / 12)) {
+  //             alert(`...You viewed all images with ${word}! Please, enter new word!`);
+  //           }
             
-            if (images !== null) {
-              const addImages = 
-                data.hits;
-                setImages(images.concat(addImages));
-                setTotalHits(data.totalHits);
-            }
-    } catch (error) {
-      setError(error.message);
-      console.log(errorMsg);
-    } finally {
-        setIsLoading(false)};
-  }
+  //           if (images !== null) {
+  //             const addImages = 
+  //               data.hits;
+  //               setImages(images.concat(addImages));
+  //               setTotalHits(data.totalHits);
+  //           }
+  //   } catch (error) {
+  //     setError(error.message);
+  //     console.log(errorMsg);
+  //   } finally {
+  //       setIsLoading(false)};
+  // }
 
 
   useEffect((prevState) => {
-    
+    const fetchImages = async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
+        if (images == null) {
+            setImages(data.hits);
+            setTotalHits(data.totalHits);
+        }
+        if (page === Math.floor(totalHits / 12)) {
+                alert(`...You viewed all images with ${word}! Please, enter new word!`);
+              }
+              
+              if (images !== null) {
+                const addImages = 
+                  data.hits;
+                  setImages(images.concat(addImages));
+                  setTotalHits(data.totalHits);
+              }
+      } catch (error) {
+        setError(error.message);
+        console.log(errorMsg);
+      } finally {
+          setIsLoading(false)};
+    }
     if (prevState !== word ) {
         setImages(null);
       fetchImages();
