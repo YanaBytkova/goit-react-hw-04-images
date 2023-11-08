@@ -53,19 +53,19 @@ export const App = () => {
   // }
 
 
-  useEffect((prevState, totalHits) => {
+  useEffect((totalHits) => {
     
     const fetchImages = async () => {
       try {
         setIsLoading(true);
-        setImages(images);
+        // setImages(images);
         const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
         if (images == null) {
           // console.log("No images");
             setImages(data.hits);
             setTotalHits(data.totalHits);
         } 
-              if (images !== null && page > 1) {
+              if (page > 1) {
                 const addImages = 
                   data.hits;
                   setImages([...images, ...addImages]);
@@ -89,7 +89,7 @@ export const App = () => {
       fetchImages();
     }
     
-  }, [word, page]);
+  }, [images, word, page]);
   // componentDidUpdate(_, prevState) {
   //   if (prevState.word !== this.state.word) {
   //     this.setState({
