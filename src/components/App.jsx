@@ -53,7 +53,7 @@ export const App = () => {
   // }
 
 
-  useEffect((totalHits) => {
+  useEffect(() => {
     // setImages(images);
     // setImages(totalHits);
     const fetchImages = async () => {
@@ -77,31 +77,14 @@ export const App = () => {
                 alert(`...You viewed all images with ${word}! Please, enter new word!`);
               }
       } catch (error) {
-        // setError(error.message);
         console.log(error.message);
       } finally {
           setIsLoading(false)};
     }
-    if (word && page === 1) {
-        setImages(null);
-      fetchImages();
-    }
-    if ( page > 1) {
-      fetchImages();
-    }
+    fetchImages();
+ 
     
-  }, [word, page]);
-  // componentDidUpdate(_, prevState) {
-  //   if (prevState.word !== this.state.word) {
-  //     this.setState({
-  //       images: null,
-  //     });
-  //     this.fetchImages();
-  //   }
-  //   if (this.state.page !== prevState.page || this.state.query!== prevState.query) {
-  //     this.fetchImages();
-  //   }
-  // };
+  }, [word, page, totalHits]);
 
   const openModal = imageUrl => {
       setIsOpenModal(true);
